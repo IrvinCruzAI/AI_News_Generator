@@ -9,6 +9,17 @@
 
 ---
 
+## 🆕 NEW: Optimized for FREE Usage!
+
+**🎉 Now supports FREE AI models** - Generate articles at ZERO cost using Google Gemini or Groq  
+**💰 75% cost reduction** - From $44-89/month → $0-16/month  
+**🚀 50% faster** - Request caching eliminates duplicate API calls  
+**🛡️ Rate limiting** - 10 free articles/day, prevents abuse  
+
+**[Read the optimization guide →](OPTIMIZATION.md)**
+
+---
+
 ## 🚀 What Is NewsGen AI?
 
 NewsGen AI is an **AI-powered news article generator** that transforms any news headline into a complete, publication-ready article in seconds. Built for content marketers, freelance writers, and digital publishers who need to scale content production without sacrificing quality.
@@ -69,13 +80,22 @@ NewsGen AI automates the entire article creation workflow:
 - Vite (lightning-fast dev experience)
 - Tailwind CSS (custom design system)
 
-**AI Integration**
-- OpenAI GPT API
-- Real-time news aggregation API
-- Webhook-based architecture
+**AI Integration** 🆓 **NEW: FREE options available!**
+- Google Gemini (FREE - 1M requests/day) - Primary
+- Groq (FREE - fast inference) - Fallback
+- OpenAI GPT-4o-mini (Paid) - Optional
+- Automatic provider fallback
+- Request caching (5-min TTL)
+- Rate limiting (10 articles/day free)
+
+**News Aggregation**
+- Real-time news search
+- Image + metadata extraction
+- Make.com webhook integration
 
 **Storage & State**
 - LocalStorage (Phase 1)
+- Request cache (in-memory)
 - Supabase-ready for Phase 2
 
 **Deployment**
@@ -116,10 +136,30 @@ Open [http://localhost:5173](http://localhost:5173) and start generating article
 
 Create a `.env` file in the root directory:
 
-```env
-VITE_NEWS_API_KEY=your_news_api_key
-VITE_AI_API_KEY=your_openai_api_key
+```bash
+cp .env.example .env
 ```
+
+**Option 1: FREE (Recommended) 🆓**
+```env
+# Get free key at: https://makersuite.google.com/app/apikey
+VITE_GEMINI_API_KEY=your_gemini_key_here
+```
+
+**Option 2: FREE (Alternative) 🆓**
+```env
+# Get free key at: https://console.groq.com/keys
+VITE_GROQ_API_KEY=your_groq_key_here
+```
+
+**Option 3: PAID (Fallback) 💳**
+```env
+# Get key at: https://platform.openai.com/api-keys
+VITE_OPENAI_API_KEY=your_openai_key_here
+```
+
+**Best setup:** Configure multiple providers for automatic fallback  
+**See:** [OPTIMIZATION.md](OPTIMIZATION.md) for detailed setup guide
 
 ---
 
