@@ -1,0 +1,378 @@
+# NewsGen AI
+
+> Transform news headlines into publication-ready articles in 10 seconds. 100x faster than manual writing.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![GitHub Repo](https://img.shields.io/badge/GitHub-View%20Code-blue?logo=github)](https://github.com/IrvinCruzAI/AI_News_Generator)
+
+**A [FutureCrafters](https://www.futurecrafters.ai) Project**  
+*Built by [Irvin Cruz](https://irvincruz.com), Founder & AI Strategy Consultant*
+
+---
+
+## 🆕 NEW: Optimized for FREE Usage!
+
+**🎉 Now supports FREE AI models** - Generate articles at ZERO cost using Google Gemini or Groq  
+**💰 75% cost reduction** - From $44-89/month → $0-16/month  
+**🚀 50% faster** - Request caching eliminates duplicate API calls  
+**🛡️ Rate limiting** - 10 free articles/day, prevents abuse  
+
+**[Read the optimization guide →](OPTIMIZATION.md)**
+
+---
+
+## 🚀 What Is NewsGen AI?
+
+NewsGen AI is an **AI-powered news article generator** that transforms any news headline into a complete, publication-ready article in seconds. Built for content marketers, freelance writers, and digital publishers who need to scale content production without sacrificing quality.
+
+**One-line pitch:** From headline to article in one click.
+
+---
+
+## 🎯 The Problem
+
+Content creators face a productivity bottleneck:
+- ⏰ **2-4 hours** to research and write each article
+- 📉 **Limited output** restricts publishing frequency
+- 💰 **High costs** for freelance writers or staff
+- ⚡ **Slow response** to trending topics and breaking news
+
+**Result:** Content teams can't keep up with market demand.
+
+---
+
+## ✨ The Solution
+
+NewsGen AI automates the entire article creation workflow:
+
+1. **Search** any news topic in real-time
+2. **Browse** AI-curated headlines with images
+3. **Click** "Generate" on any headline
+4. **Receive** a full article in 10-15 seconds
+
+**100x faster than traditional writing.** Zero learning curve. Publication-ready content.
+
+---
+
+## 💡 Key Features
+
+### Core Capabilities
+✅ **Real-Time News Aggregation** - Search any topic, get current headlines  
+✅ **AI Article Generation** - GPT-powered content creation in seconds  
+✅ **Beautiful UI** - Premium design with dark mode support  
+✅ **Article Library** - Save and manage all generated content  
+✅ **Search History** - Autocomplete from previous searches  
+✅ **One-Click Copy** - Instantly copy articles to clipboard  
+✅ **Mobile Responsive** - Create content anywhere  
+
+### Power Features
+⚡ **Concurrent Generation** - Create multiple articles simultaneously  
+📚 **Gallery & List Views** - Organize content your way  
+🔍 **Full-Screen Reader** - Distraction-free article review  
+↩️ **Undo Delete** - Never lose your work  
+🎨 **Markdown Support** - Clean formatting for publishing  
+
+---
+
+## 🎨 Tech Stack
+
+**Frontend**
+- React 18 + TypeScript
+- Vite (lightning-fast dev experience)
+- Tailwind CSS (custom design system)
+
+**AI Integration** 🆓 **NEW: FREE options available!**
+- Google Gemini (FREE - 1M requests/day) - Primary
+- Groq (FREE - fast inference) - Fallback
+- OpenAI GPT-4o-mini (Paid) - Optional
+- Automatic provider fallback
+- Request caching (5-min TTL)
+- Rate limiting (10 articles/day free)
+
+**News Aggregation**
+- Real-time news search
+- Image + metadata extraction
+- Make.com webhook integration
+
+**Storage & State**
+- LocalStorage (Phase 1)
+- Request cache (in-memory)
+- Supabase-ready for Phase 2
+
+**Deployment**
+- Static hosting optimized
+- Vercel/Netlify compatible
+- <1.5s first contentful paint
+
+---
+
+## 🚀 Quick Start
+
+### Prerequisites
+- Node.js 18+ installed
+- npm or yarn
+- API keys (see Configuration)
+
+### Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/IrvinCruzAI/AI_News_Generator.git
+cd AI_News_Generator
+
+# Install dependencies
+npm install
+
+# Configure environment variables
+cp .env.example .env
+# Add your API keys to .env
+
+# Start development server
+npm run dev
+```
+
+Open [http://localhost:5173](http://localhost:5173) and start generating articles!
+
+### Configuration
+
+Create a `.env` file in the root directory:
+
+```bash
+cp .env.example .env
+```
+
+**Option 1: FREE (Recommended) 🆓**
+```env
+# Get free key at: https://makersuite.google.com/app/apikey
+VITE_GEMINI_API_KEY=your_gemini_key_here
+```
+
+**Option 2: FREE (Alternative) 🆓**
+```env
+# Get free key at: https://console.groq.com/keys
+VITE_GROQ_API_KEY=your_groq_key_here
+```
+
+**Option 3: PAID (Fallback) 💳**
+```env
+# Get key at: https://platform.openai.com/api-keys
+VITE_OPENAI_API_KEY=your_openai_key_here
+```
+
+**Best setup:** Configure multiple providers for automatic fallback  
+**See:** [OPTIMIZATION.md](OPTIMIZATION.md) for detailed setup guide
+
+---
+
+## 📖 Use Cases
+
+### For Content Marketing Teams
+- **Problem:** Need 10+ articles per week for SEO
+- **Solution:** Generate article drafts in bulk, editors polish
+- **Result:** 3x content output with same team size
+
+### For Freelance Writers
+- **Problem:** Income limited by writing speed
+- **Solution:** Use AI for first drafts, focus on editing/expertise
+- **Result:** Scale from 5 to 50 articles/month
+
+### For Digital Publishers
+- **Problem:** Breaking news requires fast turnaround
+- **Solution:** Generate coverage in seconds, beat competitors
+- **Result:** First-to-publish advantage on trending topics
+
+### For Marketing Agencies
+- **Problem:** Clients demand constant content across channels
+- **Solution:** Repurpose news into blog posts, social, newsletters
+- **Result:** Deliver more value per client, increase retention
+
+---
+
+## 📊 Performance
+
+- **Article Generation:** 10-15 seconds per article
+- **Concurrent Limit:** 5 simultaneous generations
+- **Success Rate:** 95%+ completion rate
+- **First Paint:** <1.5s on 3G networks
+- **Bundle Size:** Optimized for fast loading
+
+---
+
+## 💼 Need AI Systems for Your Business?
+
+**FutureCrafters builds AI-powered control layers that make businesses 10x more efficient.**
+
+### Our Services
+
+**🎯 AI Strategy & Implementation**
+- Custom AI system design
+- Business intelligence dashboards
+- Marketing automation
+- Content generation engines
+- Network intelligence tools
+
+**🚀 What We Build**
+- **Control Layer Sprints** - 2-week implementations of focused AI systems
+- **AI Labs** - Monthly retainer for ongoing AI development and optimization  
+- **Custom Solutions** - White-label tools and enterprise integrations
+- **AI Guild** - Community and training for businesses adopting AI
+
+**💡 Our Approach**
+1. **Discovery** - We understand your business and identify AI opportunities
+2. **Paid Diagnostic** - Deep-dive analysis with actionable roadmap
+3. **Build** - Rapid implementation of AI systems that drive ROI
+4. **Optimize** - Continuous improvement and expansion
+
+### Why FutureCrafters?
+
+**✅ Practical AI** - We build systems that work, not proof-of-concepts  
+**✅ Business-First** - Focus on ROI and measurable outcomes  
+**✅ Rapid Deployment** - 2-week sprints, not 6-month projects  
+**✅ Real Experience** - Built AI systems for Disney, Entercom, and growing businesses  
+
+### Who We Help
+
+- **Service Businesses** - Agencies, consultants, professional services
+- **Marketing Teams** - Content creation, lead generation, customer intelligence
+- **Operations Leaders** - Workflow automation, business intelligence
+- **Founders** - AI strategy, tool selection, implementation guidance
+
+### Get Started
+
+**📞 [Book a Free Consultation](https://calendar.app.google/5of8AAhCW2FVV2Eg7)**  
+Let's discuss how AI can transform your business operations.
+
+**📧 Contact:** [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)  
+**🌐 Website:** [www.futurecrafters.ai](https://www.futurecrafters.ai)  
+**💼 LinkedIn:** [linkedin.com/company/futurecraftersai](https://linkedin.com/company/futurecraftersai)
+
+---
+
+**💡 Looking for custom AI tools like NewsGen?** We build white-label versions and custom integrations for agencies and enterprises. Contact us to discuss your needs.
+
+---
+
+## 🛠️ Development
+
+### Project Structure
+```
+AI_News_Generator/
+├── src/
+│   ├── components/      # React components
+│   ├── hooks/           # Custom React hooks
+│   ├── types.ts         # TypeScript definitions
+│   └── main.tsx         # App entry point
+├── public/              # Static assets
+├── PROJECT_SPEC.md      # Detailed technical spec
+└── PROJECT_SUMMARY.md   # Business overview
+```
+
+### Code Quality
+- TypeScript for type safety
+- ESLint for code standards
+- Component-based architecture
+- Custom hooks for reusability
+- Accessibility compliance (WCAG 2.1 AA)
+
+### Contributing
+Contributions welcome! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
+
+## 📈 SEO & Keywords
+
+**Primary Keywords:** AI content generation, news article generator, automated content creation, AI writing tool, content marketing automation
+
+**Target Audience:** Content marketers, freelance writers, digital publishers, marketing agencies, corporate communications teams
+
+**Search Intent:** "How to generate articles faster", "AI content writing tools", "automated news articles", "scale content production"
+
+---
+
+## 🌟 Why This Project Matters
+
+Content demand is growing 15% YoY, but production capacity isn't keeping pace. NewsGen AI bridges that gap by:
+
+- **Democratizing content creation** - Anyone can publish quality content
+- **Reducing costs** - 90% cheaper than hiring writers
+- **Enabling speed** - React to trends in real-time
+- **Maintaining quality** - AI-assisted, human-polished workflow
+
+**The future of content is human creativity + AI efficiency.**
+
+---
+
+## 🏢 About FutureCrafters
+
+**FutureCrafters** builds AI-powered control layers that make businesses 10x more efficient. We specialize in marketing automation, business intelligence, and AI system design for service-based businesses.
+
+**What We Build:**
+- AI marketing automation systems
+- Business intelligence dashboards
+- Content generation engines
+- Network intelligence tools
+- Custom AI solutions
+
+**Founded by Irvin Cruz**, CAIO-certified AI strategist with 8+ years building business systems at Disney, Entercom, and beyond.
+
+### Connect With Us
+
+**Company:**
+- 🌐 [www.futurecrafters.ai](https://www.futurecrafters.ai)
+- 💼 [LinkedIn](https://linkedin.com/company/futurecraftersai)
+- 📘 [Facebook](https://www.facebook.com/futurecraftersai)
+- 📧 [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
+
+**Founder:**
+- 🌐 [irvincruz.com](https://irvincruz.com)
+- 💼 [LinkedIn](https://linkedin.com/in/irvincruzrodriguez)
+- 📧 [irvin@futurecrafters.ai](mailto:irvin@futurecrafters.ai)
+
+---
+
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details
+
+---
+
+## 🙏 Acknowledgments
+
+Built with:
+- [React](https://react.dev) - UI framework
+- [Vite](https://vitejs.dev) - Build tool
+- [Tailwind CSS](https://tailwindcss.com) - Styling
+- [OpenAI](https://openai.com) - AI models
+- News API providers
+
+---
+
+## 📞 Get In Touch
+
+**Have a project idea?** Let's talk about how AI can transform your content workflow.
+
+**Need consulting?** FutureCrafters helps businesses implement AI systems that drive measurable ROI. From discovery to deployment, we build control layers that actually work.
+
+**Want to collaborate?** We're open to partnerships, integrations, and white-label opportunities.
+
+**Book a consultation:** [Schedule a call](https://calendar.app.google/5of8AAhCW2FVV2Eg7) or email [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
+
+---
+
+**⭐ Star this repo if you find it useful!** It helps others discover the project.
+
+---
+
+## 🚀 More From FutureCrafters
+
+NewsGen AI is part of our broader AI systems portfolio:
+
+- **Mission Control** - Business intelligence dashboard for solopreneurs
+- **Rory** - AI content engine with custom voice modeling
+- **Nexus** - Network intelligence for LinkedIn relationship management
+- **Sol** - 5-agent AI operating system for business automation
+
+**Explore more:** [github.com/IrvinCruzAI](https://github.com/IrvinCruzAI)
+
+---
+
+*A FutureCrafters Project | Last Updated: February 2026*
