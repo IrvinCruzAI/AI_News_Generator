@@ -277,7 +277,6 @@ Content demand is growing 15% YoY, but production capacity isn't keeping pace. N
 **Founder:**
 - 🌐 [irvincruz.com](https://irvincruz.com)
 - 💼 [LinkedIn](https://linkedin.com/in/irvincruzrodriguez)
-- 📸 [Instagram](https://www.instagram.com/thatdudeirvincruz)
 - 📧 [irvin@futurecrafters.ai](mailto:irvin@futurecrafters.ai)
 
 ---
