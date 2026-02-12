@@ -197,49 +197,57 @@ VITE_OPENAI_API_KEY=your_openai_key_here
 
 ---
 
-## 🗺️ Roadmap
+## 💼 Need AI Systems for Your Business?
 
-### Phase 1 (Current) ✅
-- [x] Real-time news search
-- [x] AI article generation
-- [x] Article library management
-- [x] Dark mode and responsive design
+**FutureCrafters builds AI-powered control layers that make businesses 10x more efficient.**
 
-### Phase 2 (Next 30 days)
-- [ ] User authentication (Supabase)
-- [ ] Cloud storage for articles
-- [ ] Team collaboration features
-- [ ] Article templates and styles
+### Our Services
 
-### Phase 3 (Next 90 days)
-- [ ] Multi-language support
-- [ ] Custom AI tone and voice
-- [ ] WordPress integration
-- [ ] API access for developers
+**🎯 AI Strategy & Implementation**
+- Custom AI system design
+- Business intelligence dashboards
+- Marketing automation
+- Content generation engines
+- Network intelligence tools
+
+**🚀 What We Build**
+- **Control Layer Sprints** - 2-week implementations of focused AI systems
+- **AI Labs** - Monthly retainer for ongoing AI development and optimization  
+- **Custom Solutions** - White-label tools and enterprise integrations
+- **AI Guild** - Community and training for businesses adopting AI
+
+**💡 Our Approach**
+1. **Discovery** - We understand your business and identify AI opportunities
+2. **Paid Diagnostic** - Deep-dive analysis with actionable roadmap
+3. **Build** - Rapid implementation of AI systems that drive ROI
+4. **Optimize** - Continuous improvement and expansion
+
+### Why FutureCrafters?
+
+**✅ Practical AI** - We build systems that work, not proof-of-concepts  
+**✅ Business-First** - Focus on ROI and measurable outcomes  
+**✅ Rapid Deployment** - 2-week sprints, not 6-month projects  
+**✅ Real Experience** - Built AI systems for Disney, Entercom, and growing businesses  
+
+### Who We Help
+
+- **Service Businesses** - Agencies, consultants, professional services
+- **Marketing Teams** - Content creation, lead generation, customer intelligence
+- **Operations Leaders** - Workflow automation, business intelligence
+- **Founders** - AI strategy, tool selection, implementation guidance
+
+### Get Started
+
+**📞 Book a Free Consultation**  
+Let's discuss how AI can transform your business operations.
+
+**📧 Contact:** [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)  
+**🌐 Website:** [www.futurecrafters.ai](https://www.futurecrafters.ai)  
+**💼 LinkedIn:** [linkedin.com/company/futurecraftersai](https://linkedin.com/company/futurecraftersai)
 
 ---
 
-## 💼 Business Model
-
-**Freemium SaaS by FutureCrafters**
-- **Free:** 10 articles/month
-- **Pro ($29/mo):** Unlimited articles, advanced features
-- **Team ($99/mo):** 5 users, collaboration tools
-- **Enterprise:** White-label, API access, custom limits, dedicated support
-
-**Target Market:** 4M+ content marketing professionals globally
-
-**Custom Solutions:** Need this for your agency or enterprise? We build white-label versions and custom integrations. Contact [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
-
----
-
-## 🏆 Competitive Advantages
-
-1. **Speed** - Fastest time-to-article in the market (10 seconds vs 2+ hours)
-2. **UX** - Premium design, not typical AI tool aesthetic
-3. **Simplicity** - No complex prompts or learning curve
-4. **Quality** - Context-aware generation from real news sources
-5. **Price** - Fraction of freelance writer costs ($29/mo vs $100+/article)
+**💡 Looking for custom AI tools like NewsGen?** We build white-label versions and custom integrations for agencies and enterprises. Contact us to discuss your needs.
 
 ---
 
