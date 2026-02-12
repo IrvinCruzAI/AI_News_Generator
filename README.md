@@ -270,12 +270,14 @@ Content demand is growing 15% YoY, but production capacity isn't keeping pace. N
 
 **Company:**
 - 🌐 [www.futurecrafters.ai](https://www.futurecrafters.ai)
-- 💼 [LinkedIn](https://linkedin.com/company/futurecrafterai)
+- 💼 [LinkedIn](https://linkedin.com/company/futurecraftersai)
+- 📘 [Facebook](https://www.facebook.com/futurecraftersai)
 - 📧 [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
 
 **Founder:**
 - 🌐 [irvincruz.com](https://irvincruz.com)
 - 💼 [LinkedIn](https://linkedin.com/in/irvincruzrodriguez)
+- 📸 [Instagram](https://www.instagram.com/thatdudeirvincruz)
 - 📧 [irvin@futurecrafters.ai](mailto:irvin@futurecrafters.ai)
 
 ---
