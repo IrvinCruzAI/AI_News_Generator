@@ -4,7 +4,8 @@
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ai-news-generator.vercel.app) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-**Built by [Irvin Cruz](https://irvincruz.com) | AI Strategy Consultant**
+**A [FutureCrafters](https://www.futurecrafters.ai) Project**  
+*Built by [Irvin Cruz](https://irvincruz.com), Founder & AI Strategy Consultant*
 
 ---
 
@@ -180,13 +181,15 @@ VITE_AI_API_KEY=your_openai_api_key
 
 ## 💼 Business Model
 
-**Freemium SaaS**
+**Freemium SaaS by FutureCrafters**
 - **Free:** 10 articles/month
 - **Pro ($29/mo):** Unlimited articles, advanced features
 - **Team ($99/mo):** 5 users, collaboration tools
-- **Enterprise:** White-label, API, custom limits
+- **Enterprise:** White-label, API access, custom limits, dedicated support
 
 **Target Market:** 4M+ content marketing professionals globally
+
+**Custom Solutions:** Need this for your agency or enterprise? We build white-label versions and custom integrations. Contact [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
 
 ---
 
@@ -250,19 +253,29 @@ Content demand is growing 15% YoY, but production capacity isn't keeping pace. N
 
 ---
 
-## 👨‍💻 About the Creator
+## 🏢 About FutureCrafters
 
-**Irvin Cruz** is an AI Strategy Consultant specializing in marketing automation and business intelligence systems. Previously built AI systems at Disney and Entercom, now helping businesses implement practical AI solutions through FutureCrafters.
+**FutureCrafters** builds AI-powered control layers that make businesses 10x more efficient. We specialize in marketing automation, business intelligence, and AI system design for service-based businesses.
 
-**Credentials:**
-- CAIO (Chief AI Officer) Certified
-- 8+ years building business systems
-- 5-agent AI ecosystem architect (Sol, Gigawatt, Cipher, Nexus, Rory)
+**What We Build:**
+- AI marketing automation systems
+- Business intelligence dashboards
+- Content generation engines
+- Network intelligence tools
+- Custom AI solutions
 
-**Connect:**
+**Founded by Irvin Cruz**, CAIO-certified AI strategist with 8+ years building business systems at Disney, Entercom, and beyond.
+
+### Connect With Us
+
+**Company:**
+- 🌐 [www.futurecrafters.ai](https://www.futurecrafters.ai)
+- 💼 [LinkedIn](https://linkedin.com/company/futurecrafters)
+- 📧 [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
+
+**Founder:**
 - 🌐 [irvincruz.com](https://irvincruz.com)
 - 💼 [LinkedIn](https://linkedin.com/in/irvincruzai)
-- 🐦 [Twitter](https://twitter.com/irvinbuildsai)
 - 📧 [irvin@futurecrafters.ai](mailto:irvin@futurecrafters.ai)
 
 ---
@@ -288,9 +301,11 @@ Built with:
 
 **Have a project idea?** Let's talk about how AI can transform your content workflow.
 
-**Need consulting?** I help businesses implement AI systems that drive measurable ROI.
+**Need consulting?** FutureCrafters helps businesses implement AI systems that drive measurable ROI. From discovery to deployment, we build control layers that actually work.
 
-**Want to collaborate?** Open to partnerships, integrations, and white-label opportunities.
+**Want to collaborate?** We're open to partnerships, integrations, and white-label opportunities.
+
+**Book a consultation:** [Schedule a call](https://calendly.com/futurecrafters) or email [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
 
 ---
 
@@ -298,4 +313,17 @@ Built with:
 
 ---
 
-*Last Updated: February 2026*
+## 🚀 More From FutureCrafters
+
+NewsGen AI is part of our broader AI systems portfolio:
+
+- **Mission Control** - Business intelligence dashboard for solopreneurs
+- **Rory** - AI content engine with custom voice modeling
+- **Nexus** - Network intelligence for LinkedIn relationship management
+- **Sol** - 5-agent AI operating system for business automation
+
+**Explore more:** [github.com/IrvinCruzAI](https://github.com/IrvinCruzAI)
+
+---
+
+*A FutureCrafters Project | Last Updated: February 2026*
