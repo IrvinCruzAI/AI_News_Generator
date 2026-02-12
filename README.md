@@ -2,7 +2,7 @@
 
 > Transform news headlines into publication-ready articles in 10 seconds. 100x faster than manual writing.
 
-[![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://ai-news-generator.vercel.app) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE) [![GitHub Repo](https://img.shields.io/badge/GitHub-View%20Code-blue?logo=github)](https://github.com/IrvinCruzAI/AI_News_Generator)
 
 **A [FutureCrafters](https://www.futurecrafters.ai) Project**  
 *Built by [Irvin Cruz](https://irvincruz.com), Founder & AI Strategy Consultant*
