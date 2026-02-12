@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Newspaper, Sparkles, Moon, Sun, Home, X, AlertCircle } from 'lucide-react';
+import { Newspaper, Sparkles, Moon, Sun, Home, X } from 'lucide-react';
 import { SearchBar } from './components/SearchBar';
 import { NewsGrid } from './components/NewsGrid';
 import { ArticleSidebar } from './components/ArticleSidebar';
@@ -8,9 +8,6 @@ import { LoadingSkeleton } from './components/LoadingSkeleton';
 import { EmptyState } from './components/EmptyState';
 import { useLocalStorage } from './hooks/useLocalStorage';
 import { useSearchHistory } from './hooks/useSearchHistory';
-import { cache } from './utils/cache';
-import { rateLimiter } from './utils/rateLimiter';
-import { generateArticle } from './services/aiService';
 import type { NewsItem, GeneratedArticle } from './types';
 
 function App() {
@@ -26,8 +23,9 @@ function App() {
   const [hasSearched, setHasSearched] = useState(false);
   const [lastDeleted, setLastDeleted] = useState<{ article: GeneratedArticle; index: number } | null>(null);
   const [showUndoToast, setShowUndoToast] = useState(false);
-  const [rateLimitMessage, setRateLimitMessage] = useState<string | null>(null);
   const { searchHistory, addToHistory, clearHistory } = useSearchHistory();
+  const [activeFilter, setActiveFilter] = useState<string>('all');
+  const [filteredNews, setFilteredNews] = useState<NewsItem[]>([]);
 
   React.useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
@@ -38,51 +36,40 @@ function App() {
       status: article.status || 'ready'
     })));
   }, [darkMode, setArticles]);
-
+          // return dateB - dateA; // Most recent first
   const handleSearch = async (query: string): Promise<void> => {
-    // Check rate limit
-    const searchCheck = rateLimiter.canSearch();
-    if (!searchCheck.allowed) {
-      setRateLimitMessage(searchCheck.message!);
-      setTimeout(() => setRateLimitMessage(null), 5000);
-      return;
-    }
-
     setIsSearching(true);
     setHasSearched(true);
     setCurrentQuery(query);
     addToHistory(query);
-    
     try {
-      console.log('[Search] Searching for:', query);
-      
-      // Use cache with 5-minute TTL
-      const data = await cache.get(
-        `search:${query}`,
-        async () => {
-          const response = await fetch('https://hook.us2.make.com/r9un2lpofaf731i9ok7n35dodj7x5beo', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ query }),
-          });
+      console.log('Searching for:', query);
+      const response = await fetch('https://hook.us2.make.com/r9un2lpofaf731i9ok7n35dodj7x5beo', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ query }),
+      });
 
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
+      console.log('Response status:', response.status);
 
-          const result = await response.json();
-          return Array.isArray(result) ? result : [];
-        },
-        5 * 60 * 1000 // 5 minutes
-      );
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
 
-      setNews(data);
-      rateLimiter.recordSearch();
-      console.log(`[Search] Found ${data.length} items (${searchCheck.remaining - 1} searches remaining today)`);
+      const data = await response.json();
+      console.log('Received data:', data);
+      console.log('Data type:', typeof data, 'Is array:', Array.isArray(data));
+
+      if (Array.isArray(data)) {
+        setNews(data);
+        console.log('Set news with', data.length, 'items');
+      } else {
+        console.error('Expected array but got:', typeof data);
+        setNews([]);
+      }
     } catch (error) {
-      console.error('[Search] Failed:', error);
-      setRateLimitMessage('Failed to fetch news. Please try again.');
-      setTimeout(() => setRateLimitMessage(null), 5000);
+      console.error('Failed to fetch news:', error);
+      alert('Failed to fetch news. Please check the console for details.');
       setNews([]);
     } finally {
       setIsSearching(false);
@@ -90,22 +77,6 @@ function App() {
   };
 
   const handleGenerateArticle = async (newsItem: NewsItem) => {
-    // Check rate limits
-    const articleCheck = rateLimiter.canGenerateArticle(generatingItems.size);
-    if (!articleCheck.allowed) {
-      setErrorStates(prev => ({ ...prev, [newsItem.link]: articleCheck.message! }));
-      setRateLimitMessage(articleCheck.message!);
-      setTimeout(() => {
-        setErrorStates(prev => {
-          const next = { ...prev };
-          delete next[newsItem.link];
-          return next;
-        });
-        setRateLimitMessage(null);
-      }, 5000);
-      return;
-    }
-
     const placeholderId = crypto.randomUUID();
     
     // Add to generating set
@@ -126,28 +97,32 @@ function App() {
     setArticles(prev => [placeholder, ...prev]);
     
     try {
-      console.log(`[Generate] Starting article generation (${articleCheck.remaining - 1} remaining today)`);
-      
-      // Use new AI service (tries free models first)
-      const result = await generateArticle({
+      const payload = {
         title: newsItem.title,
+        link: newsItem.link,
         description: newsItem.snippet,
-        sourceUrl: newsItem.link,
+        publishedAt: newsItem.date,
         source: newsItem.source
+      };
+
+      const response = await fetch('https://hook.us2.make.com/np9opu5vptwtduexatc41x7r3hv44m0s', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
       });
       
-      console.log(`[Generate] Success with ${result.provider}`);
+      const content = await response.text();
       
-      // Validate content
-      if (!result.content || result.content.trim().length < 100) {
-        throw new Error('Generated content too short or empty');
+      // Validate that we received actual article content
+      if (!content || content.trim().toLowerCase() === 'accepted' || content.trim() === '') {
+        throw new Error('The article could not be generated. The service may be processing your request or experiencing issues.');
       }
       
       // Replace placeholder with real article
       const article: GeneratedArticle = {
         id: placeholderId,
         title: newsItem.title,
-        content: result.content,
+        content: content,
         sourceUrl: newsItem.link,
         generatedAt: new Date().toISOString(),
         status: 'ready',
@@ -158,26 +133,15 @@ function App() {
       setArticles(prev => prev.map(a => a.id === placeholderId ? article : a));
       setShowSidebar(true);
       setSelectedArticle(article);
-      
-      // Record usage
-      rateLimiter.recordArticle();
     } catch (error) {
-      console.error('[Generate] Failed:', error);
-      
       // Update placeholder to error state
       setArticles(prev => prev.map(a => 
         a.id === placeholderId 
-          ? { 
-              ...a, 
-              status: 'error' as const, 
-              errorMessage: error instanceof Error ? error.message : 'Generation failed' 
-            }
+          ? { ...a, status: 'error' as const, errorMessage: error instanceof Error ? error.message : 'Generation failed' }
           : a
       ));
-      setErrorStates(prev => ({ 
-        ...prev, 
-        [newsItem.link]: 'Generation failed. Please try again.' 
-      }));
+      setErrorStates(prev => ({ ...prev, [newsItem.link]: 'Generation failed. Please try again.' }));
+      console.error('Failed to generate article:', error);
     } finally {
       setGeneratingItems(prev => {
         const next = new Set(prev);
@@ -242,10 +206,6 @@ function App() {
     setSelectedArticle(null);
     setShowSidebar(true);
   };
-
-  // Get usage stats for display
-  const usageStats = rateLimiter.getStats();
-
   return (
     <div className={`min-h-screen transition-colors duration-150 ${darkMode ? 'dark bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 to-indigo-50'} flex flex-col`}>
       <div className="flex-1 container mx-auto max-w-6xl px-4 py-8">
@@ -278,18 +238,9 @@ function App() {
               From headline to article in one click
             </h2>
             
-            <p className="text-base sm:text-lg text-muted max-w-2xl mb-4 px-4">
+            <p className="text-base sm:text-lg text-muted max-w-2xl mb-8 sm:mb-12 px-4">
               Fetch today's news and generate original articles instantly
             </p>
-            
-            {/* Usage stats banner */}
-            <div className="mb-8 px-4 text-sm text-muted">
-              <div className="flex items-center justify-center gap-4">
-                <span>✨ {usageStats.searchesRemaining} searches left today</span>
-                <span>•</span>
-                <span>📝 {usageStats.articlesRemaining} articles left today</span>
-              </div>
-            </div>
             
             <div className="w-full max-w-2xl px-4">
               <SearchBar 
@@ -333,10 +284,6 @@ function App() {
                 </div>
               </div>
               <div className="flex items-center gap-2">
-                {/* Usage indicator */}
-                <div className="hidden md:flex items-center gap-2 text-xs text-muted">
-                  <span>{usageStats.articlesRemaining} articles</span>
-                </div>
                 <button
                   onClick={handleGoHome}
                   className="p-2 bg-panel rounded-xl shadow-1 text-muted hover:text-ink transition-colors duration-150 ring-1 ring-black/5 flex-shrink-0 min-h-[40px] min-w-[40px] touch-manipulation"
@@ -354,14 +301,6 @@ function App() {
                 </button>
               </div>
             </div>
-          </div>
-        )}
-        
-        {/* Rate limit message banner */}
-        {rateLimitMessage && (
-          <div className="mb-6 px-4 py-3 bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-xl flex items-center gap-3 text-yellow-800 dark:text-yellow-200">
-            <AlertCircle className="w-5 h-5 flex-shrink-0" />
-            <p className="text-sm">{rateLimitMessage}</p>
           </div>
         )}
         
@@ -420,8 +359,8 @@ function App() {
 
         <footer className="mt-16 text-center text-sm text-muted py-4 space-y-2">
           <div>
-            ©2025 <a href="https://irvincruz.com/" className="hover:text-ink transition-colors duration-150">Irvin Cruz</a>,{' '}
-            <a href="https://www.futurecrafters.ai/" className="hover:text-ink transition-colors duration-150">FutureCrafters.AI</a>
+          ©2025 <a href="https://irvincruz.com/" className="hover:text-ink transition-colors duration-150">Irvin Cruz</a>,{' '}
+          <a href="https://www.futurecrafters.ai/" className="hover:text-ink transition-colors duration-150">FutureCrafters.AI</a>
           </div>
           <div className="flex items-center justify-center gap-4">
             <a href="#" className="hover:text-ink transition-colors duration-150">Privacy</a>
