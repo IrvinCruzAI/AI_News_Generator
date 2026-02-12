@@ -238,7 +238,7 @@ VITE_OPENAI_API_KEY=your_openai_key_here
 
 ### Get Started
 
-**📞 Book a Free Consultation**  
+**📞 [Book a Free Consultation](https://calendar.app.google/5of8AAhCW2FVV2Eg7)**  
 Let's discuss how AI can transform your business operations.
 
 **📧 Contact:** [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)  
@@ -354,7 +354,7 @@ Built with:
 
 **Want to collaborate?** We're open to partnerships, integrations, and white-label opportunities.
 
-**Book a consultation:** [Schedule a call](https://calendly.com/futurecrafters) or email [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
+**Book a consultation:** [Schedule a call](https://calendar.app.google/5of8AAhCW2FVV2Eg7) or email [hello@futurecrafters.ai](mailto:hello@futurecrafters.ai)
 
 ---
 
