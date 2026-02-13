@@ -410,7 +410,6 @@ NewsGen AI is part of FutureCrafters' portfolio of AI business tools.
 **More Projects:**
 - [Marketing Dashboard](https://github.com/IrvinCruzAI/Marketing_Dashboard) — 6 AI marketing generators with business context engine
 - [WebinarStudio](https://github.com/IrvinCruzAI/WebinarStudio) — Enterprise webinar content pipeline (115 TypeScript files)
-- Mission Control — Real-time business intelligence dashboard
 - Rory — AI content engine with custom voice modeling
 - Nexus — LinkedIn network intelligence
 
