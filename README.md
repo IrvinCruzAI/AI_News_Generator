@@ -6,7 +6,7 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
 
-**[🚀 Try Live Demo](https://newsgenai.bolt.host)** | **[For Recruiters](#portfolio-analysis)** | **[Tech Stack](#tech-stack)** | **[Quick Start](#quick-start)**
+**[🚀 Try Live Demo](https://newsgenai.bolt.host)** | **[Tech Stack](#tech-stack)** | **[Quick Start](#quick-start)**
 
 **A [FutureCrafters](https://www.futurecrafters.ai) Project** • Built by [Irvin Cruz](https://irvincruz.com)
 
@@ -18,7 +18,7 @@
 
 **Why Different:** Multi-provider AI system (Gemini → Groq → OpenAI automatic fallback) with request caching and rate limiting. Production-ready with error handling and TypeScript.
 
-**For Recruiters:** Demonstrates AI integration sophistication, error recovery patterns, caching architecture, and user experience thinking (10-sec generation, progress indicators, automatic fallback).
+**Technical Showcase:** Demonstrates AI integration sophistication, error recovery patterns, caching architecture, and user experience thinking (10-sec generation, progress indicators, automatic fallback).
 
 **For Businesses:** Content marketers can generate 10-50 articles/day. Free to start (Google Gemini), scales with Groq (still free), OpenAI fallback for unlimited.
 
@@ -90,7 +90,7 @@
 
 ## Portfolio Analysis
 
-> **For Recruiters & Hiring Managers**
+## Technical Overview
 
 ### What This Project Demonstrates
 
@@ -445,9 +445,10 @@ NewsGen AI is part of FutureCrafters' portfolio of AI business tools.
 
 ---
 
-**For recruiters:** Demonstrates AI integration sophistication—multi-provider failover, error recovery, caching, and production-ready UX.
 
 ---
 
 *A FutureCrafters Project • Built by [Irvin Cruz](https://irvincruz.com) ☀️*  
 *Last Updated: February 2026*
+
+
