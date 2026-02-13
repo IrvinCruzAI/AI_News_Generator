@@ -7,6 +7,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)](https://reactjs.org/)
 
+**[🚀 Try Live Demo](https://newsgenai.bolt.host)** | **[For Recruiters](#portfolio-showcase)** | **[Cost Optimization](#cost-optimization)** | **[Technical Deep-Dive](#technical-implementation)**
+
 **A [FutureCrafters](https://www.futurecrafters.ai) Project** • Built by [Irvin Cruz](https://irvincruz.com)
 
 ---
