@@ -12,8 +12,11 @@
 
 ---
 
-![NewsGen AI - Transform news headlines into publication-ready articles in 10 seconds](assets/hero-screenshot.png)
-*Transform news headlines into publication-ready articles in 10 seconds — Live demo at [newsgenai.bolt.host](https://newsgenai.bolt.host)*
+<p align="center">
+  <img src="https://raw.githubusercontent.com/IrvinCruzAI/AI_News_Generator/main/assets/hero-screenshot.png" alt="NewsGen AI Platform" width="100%">
+</p>
+
+<p align="center"><em>Transform news headlines into publication-ready articles in 10 seconds — Live demo at <a href="https://newsgenai.bolt.host">newsgenai.bolt.host</a></em></p>
 
 ---
 
