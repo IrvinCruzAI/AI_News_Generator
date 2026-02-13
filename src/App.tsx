@@ -1,21 +1,25 @@
 import React, { useState } from 'react';
-import { Newspaper, Sparkles, Moon, Sun, Home, X, AlertCircle } from 'lucide-react';
+import { Newspaper, Sparkles, Moon, Sun, Home, X, AlertCircle, LogOut } from 'lucide-react';
 import { SearchBar } from './components/SearchBar';
 import { NewsGrid } from './components/NewsGrid';
 import { ArticleSidebar } from './components/ArticleSidebar';
 import { ArticleViewer } from './components/ArticleViewer';
 import { LoadingSkeleton } from './components/LoadingSkeleton';
 import { EmptyState } from './components/EmptyState';
+import { Auth } from './components/Auth';
+import { useAuth } from './contexts/AuthContext';
 import { useLocalStorage } from './hooks/useLocalStorage';
-import { useSearchHistory } from './hooks/useSearchHistory';
 import { cache } from './utils/cache';
 import { rateLimiter } from './utils/rateLimiter';
 import { generateArticle } from './services/aiService';
+import { dbService } from './services/dbService';
 import type { NewsItem, GeneratedArticle } from './types';
 
 function App() {
+  const { user, loading: authLoading, signOut } = useAuth();
   const [news, setNews] = useLocalStorage<NewsItem[]>('news_items', []);
-  const [articles, setArticles] = useLocalStorage<GeneratedArticle[]>('generated_articles', []);
+  const [articles, setArticles] = useState<GeneratedArticle[]>([]);
+  const [searchHistory, setSearchHistory] = useState<string[]>([]);
   const [currentQuery, setCurrentQuery] = useState('');
   const [generatingItems, setGeneratingItems] = useState<Set<string>>(new Set());
   const [errorStates, setErrorStates] = useState<{ [key: string]: string }>({});
@@ -27,17 +31,36 @@ function App() {
   const [lastDeleted, setLastDeleted] = useState<{ article: GeneratedArticle; index: number } | null>(null);
   const [showUndoToast, setShowUndoToast] = useState(false);
   const [rateLimitMessage, setRateLimitMessage] = useState<string | null>(null);
-  const { searchHistory, addToHistory, clearHistory } = useSearchHistory();
 
   React.useEffect(() => {
     document.documentElement.classList.toggle('dark', darkMode);
-    
-    // Backfill existing articles with status: 'ready'
-    setArticles(prev => prev.map(article => ({
-      ...article,
-      status: article.status || 'ready'
-    })));
-  }, [darkMode, setArticles]);
+  }, [darkMode]);
+
+  React.useEffect(() => {
+    if (user) {
+      (async () => {
+        const userArticles = await dbService.getArticles(user.id);
+        setArticles(userArticles);
+
+        const history = await dbService.getSearchHistory(user.id);
+        setSearchHistory(history);
+      })();
+    }
+  }, [user]);
+
+  const addToHistory = (query: string) => {
+    if (!query.trim()) return;
+    setSearchHistory(prev => {
+      const filtered = prev.filter(item => item.toLowerCase() !== query.toLowerCase());
+      return [query, ...filtered].slice(0, 10);
+    });
+  };
+
+  const clearHistory = async () => {
+    if (!user) return;
+    await dbService.clearSearchHistory(user.id);
+    setSearchHistory([]);
+  };
 
   const handleSearch = async (query: string): Promise<void> => {
     // Check rate limit
@@ -60,7 +83,7 @@ function App() {
       const data = await cache.get(
         `search:${query}`,
         async () => {
-          const response = await fetch('https://hook.us2.make.com/r9un2lpofaf731i9ok7n35dodj7x5beo', {
+          const response = await fetch(import.meta.env.VITE_WEBHOOK_NEWS_SCRAPE, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ query }),
@@ -79,6 +102,10 @@ function App() {
       setNews(data);
       rateLimiter.recordSearch();
       console.log(`[Search] Found ${data.length} items (${searchCheck.remaining - 1} searches remaining today)`);
+
+      if (user) {
+        await dbService.addSearchHistory(user.id, query, data.length);
+      }
     } catch (error) {
       console.error('[Search] Failed:', error);
       setRateLimitMessage('Failed to fetch news. Please try again.');
@@ -90,6 +117,8 @@ function App() {
   };
 
   const handleGenerateArticle = async (newsItem: NewsItem) => {
+    if (!user) return;
+
     // Check rate limits
     const articleCheck = rateLimiter.canGenerateArticle(generatingItems.size);
     if (!articleCheck.allowed) {
@@ -106,77 +135,82 @@ function App() {
       return;
     }
 
-    const placeholderId = crypto.randomUUID();
-    
-    // Add to generating set
     setGeneratingItems(prev => new Set(prev).add(newsItem.link));
     setErrorStates(prev => ({ ...prev, [newsItem.link]: '' }));
-    
-    // Create placeholder article
-    const placeholder: GeneratedArticle = {
-      id: placeholderId,
-      title: newsItem.title,
-      content: '',
-      sourceUrl: newsItem.link,
-      generatedAt: new Date().toISOString(),
-      status: 'generating',
-      requestedAt: Date.now()
-    };
-    
-    setArticles(prev => [placeholder, ...prev]);
-    
+
     try {
+      const articleId = await dbService.createArticle(user.id, {
+        title: newsItem.title,
+        sourceUrl: newsItem.link,
+      });
+
+      const placeholder: GeneratedArticle = {
+        id: articleId,
+        title: newsItem.title,
+        content: '',
+        sourceUrl: newsItem.link,
+        generatedAt: new Date().toISOString(),
+        status: 'generating',
+        requestedAt: Date.now()
+      };
+
+      setArticles(prev => [placeholder, ...prev]);
+
       console.log(`[Generate] Starting article generation (${articleCheck.remaining - 1} remaining today)`);
-      
-      // Use new AI service (tries free models first)
+
       const result = await generateArticle({
         title: newsItem.title,
         description: newsItem.snippet,
         sourceUrl: newsItem.link,
         source: newsItem.source
       });
-      
+
       console.log(`[Generate] Success with ${result.provider}`);
-      
-      // Validate content
+
       if (!result.content || result.content.trim().length < 100) {
         throw new Error('Generated content too short or empty');
       }
-      
-      // Replace placeholder with real article
+
+      const completedAt = Date.now();
+      await dbService.updateArticle(articleId, {
+        content: result.content,
+        status: 'ready',
+        completedAt,
+      });
+
       const article: GeneratedArticle = {
-        id: placeholderId,
+        id: articleId,
         title: newsItem.title,
         content: result.content,
         sourceUrl: newsItem.link,
         generatedAt: new Date().toISOString(),
         status: 'ready',
         requestedAt: placeholder.requestedAt,
-        completedAt: Date.now()
+        completedAt,
       };
-      
-      setArticles(prev => prev.map(a => a.id === placeholderId ? article : a));
+
+      setArticles(prev => prev.map(a => a.id === articleId ? article : a));
       setShowSidebar(true);
       setSelectedArticle(article);
-      
-      // Record usage
+
       rateLimiter.recordArticle();
     } catch (error) {
       console.error('[Generate] Failed:', error);
-      
-      // Update placeholder to error state
-      setArticles(prev => prev.map(a => 
-        a.id === placeholderId 
-          ? { 
-              ...a, 
-              status: 'error' as const, 
-              errorMessage: error instanceof Error ? error.message : 'Generation failed' 
+
+      const errorMessage = error instanceof Error ? error.message : 'Generation failed';
+
+      setArticles(prev => prev.map(a =>
+        a.sourceUrl === newsItem.link && a.status === 'generating'
+          ? {
+              ...a,
+              status: 'error' as const,
+              errorMessage
             }
           : a
       ));
-      setErrorStates(prev => ({ 
-        ...prev, 
-        [newsItem.link]: 'Generation failed. Please try again.' 
+      setErrorStates(prev => ({
+        ...prev,
+        [newsItem.link]: 'Generation failed. Please try again.'
       }));
     } finally {
       setGeneratingItems(prev => {
@@ -191,45 +225,55 @@ function App() {
     await handleGenerateArticle(newsItem);
   };
 
-  const handleDeleteArticle = (articleId: string) => {
+  const handleDeleteArticle = async (articleId: string) => {
     const articleIndex = articles.findIndex(a => a.id === articleId);
     if (articleIndex === -1) return;
-    
+
     const articleToDelete = articles[articleIndex];
-    
-    // Store for undo
+
     setLastDeleted({ article: articleToDelete, index: articleIndex });
-    
-    // Remove from articles
     setArticles(prev => prev.filter(a => a.id !== articleId));
-    
-    // Show undo toast
     setShowUndoToast(true);
-    
-    // Auto-hide toast after 6 seconds
-    setTimeout(() => {
+
+    const timeoutId = setTimeout(async () => {
+      if (user) {
+        await dbService.deleteArticle(articleId);
+      }
       setShowUndoToast(false);
       setLastDeleted(null);
     }, 6000);
+
+    (window as any).__deleteTimeout = timeoutId;
   };
 
   const handleUndoDelete = () => {
     if (!lastDeleted) return;
-    
-    // Restore article at its original position
+
+    if ((window as any).__deleteTimeout) {
+      clearTimeout((window as any).__deleteTimeout);
+      delete (window as any).__deleteTimeout;
+    }
+
     setArticles(prev => {
       const newArticles = [...prev];
       newArticles.splice(lastDeleted.index, 0, lastDeleted.article);
       return newArticles;
     });
-    
-    // Clear undo state
+
     setLastDeleted(null);
     setShowUndoToast(false);
   };
 
-  const handleClearAll = () => {
+  const handleClearAll = async () => {
+    if (!user) return;
+
+    const articlesToDelete = [...articles];
+
     setArticles([]);
+
+    for (const article of articlesToDelete) {
+      await dbService.deleteArticle(article.id);
+    }
   };
 
   const handleGoHome = () => {
@@ -246,13 +290,36 @@ function App() {
   // Get usage stats for display
   const usageStats = rateLimiter.getStats();
 
+  if (authLoading) {
+    return (
+      <div className={`min-h-screen flex items-center justify-center ${darkMode ? 'dark bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 to-indigo-50'}`}>
+        <div className="text-center">
+          <div className="inline-block w-12 h-12 border-4 border-brand border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-muted">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return <Auth darkMode={darkMode} />;
+  }
+
   return (
     <div className={`min-h-screen transition-colors duration-150 ${darkMode ? 'dark bg-gradient-to-br from-gray-900 to-gray-800' : 'bg-gradient-to-br from-blue-50 to-indigo-50'} flex flex-col`}>
       <div className="flex-1 container mx-auto max-w-6xl px-4 py-8">
         {/* Hero Section - Only show when no search has been made */}
         {!hasSearched && (
           <header className="flex flex-col items-center justify-center min-h-[60vh] sm:min-h-[80vh] text-center relative pt-4 sm:pt-8">
-            <div className="absolute top-2 right-2 sm:top-8 sm:right-8 z-10">
+            <div className="absolute top-2 right-2 sm:top-8 sm:right-8 z-10 flex gap-2">
+              <button
+                onClick={signOut}
+                className="p-1.5 sm:p-3 bg-panel rounded-lg sm:rounded-xl shadow-1 text-muted hover:text-ink transition-colors duration-150 ring-1 ring-black/5 min-h-[36px] min-w-[36px] sm:min-h-[44px] sm:min-w-[44px] touch-manipulation"
+                aria-label="Sign out"
+                title="Sign out"
+              >
+                <LogOut className="w-3 h-3 sm:w-5 sm:h-5" />
+              </button>
               <button
                 onClick={() => setDarkMode(!darkMode)}
                 className="p-1.5 sm:p-3 bg-panel rounded-lg sm:rounded-xl shadow-1 text-muted hover:text-ink transition-colors duration-150 ring-1 ring-black/5 min-h-[36px] min-w-[36px] sm:min-h-[44px] sm:min-w-[44px] touch-manipulation"
@@ -344,6 +411,14 @@ function App() {
                   title="Clear and go home"
                 >
                   <X className="w-5 h-5" />
+                </button>
+                <button
+                  onClick={signOut}
+                  className="p-2 bg-panel rounded-xl shadow-1 text-muted hover:text-ink transition-colors duration-150 ring-1 ring-black/5 flex-shrink-0 min-h-[40px] min-w-[40px] touch-manipulation"
+                  aria-label="Sign out"
+                  title="Sign out"
+                >
+                  <LogOut className="w-5 h-5" />
                 </button>
                 <button
                   onClick={() => setDarkMode(!darkMode)}
