@@ -12,6 +12,11 @@
 
 ---
 
+![NewsGen AI - Transform news headlines into publication-ready articles in 10 seconds](assets/hero-screenshot.png)
+*Transform news headlines into publication-ready articles in 10 seconds — Live demo at [newsgenai.bolt.host](https://newsgenai.bolt.host)*
+
+---
+
 ## TL;DR (30-Second Scan)
 
 **What:** AI-powered content engine that transforms news headlines into complete, publication-ready articles in 10 seconds. Includes headline optimization, structured H2/H3 content, and SEO metadata.
