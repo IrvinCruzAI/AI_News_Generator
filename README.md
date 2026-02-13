@@ -191,13 +191,11 @@
 - ✅ **Real-time news search** — Find current headlines on any topic
 - ✅ **Article library** — Save and manage generated content
 - ✅ **Multi-provider AI** — Gemini → Groq → OpenAI automatic fallback
-- ✅ **User accounts** — Secure authentication with email/password
 
-### Security & Privacy
-- ✅ **Row Level Security** — Database-level access control
-- ✅ **Private data storage** — Each user's data is isolated
-- ✅ **Secure sessions** — JWT-based authentication
-- ✅ **Environment variables** — Sensitive config never exposed
+### Security
+- ✅ **Environment variables** — Sensitive webhooks and API keys secured
+- ✅ **No hardcoded credentials** — All secrets in .env file
+- ✅ **Private configuration** — Secure webhook URLs never exposed in code
 
 ### Production Features
 - ✅ **Error handling** — Automatic provider fallback
@@ -206,28 +204,7 @@
 - ✅ **Progress indicators** — Usage bars, reset timers
 - ✅ **TypeScript** — 100% type coverage
 - ✅ **Responsive UI** — Mobile-friendly, dark mode
-- ✅ **Database persistence** — Articles and history saved securely
-
----
-
-## Security & Data Protection
-
-### Authentication
-- **Supabase Auth** — Email/password authentication with secure session management
-- **Protected Routes** — All features require authentication
-- **Secure Sessions** — JWT-based authentication with automatic token refresh
-
-### Data Security
-- **Row Level Security (RLS)** — Database-level access control
-- **User Isolation** — Users can only access their own data
-- **Secure API Keys** — Environment variables for sensitive configuration
-- **HTTPS Only** — All communication encrypted in transit
-
-### Privacy Features
-- **Private Article Storage** — Articles saved to user's account only
-- **Personal Search History** — Search history is private and user-specific
-- **Data Ownership** — Users have full control over their data
-- **Account Deletion** — Complete data removal on account deletion
+- ✅ **LocalStorage persistence** — Articles saved in browser
 
 ---
 
@@ -239,12 +216,6 @@
 - **Tailwind CSS** — Utility-first styling
 - **Lucide React** — Icon library
 
-### Backend & Database
-- **Supabase** — PostgreSQL database with built-in authentication
-- **Row Level Security** — Database-level access control
-- **Real-time subscriptions** — Live data updates
-- **RESTful API** — Auto-generated from database schema
-
 ### AI Integration
 - **Google Gemini** — Primary (FREE, 15 req/min)
 - **Groq** — Backup (FREE, faster inference)
@@ -255,7 +226,7 @@
 ### Optimization Layer
 - **Request caching** — `src/utils/cache.ts` (5-min TTL)
 - **Rate limiting** — `src/utils/rateLimiter.ts` (daily quotas)
-- **Database persistence** — User articles and search history
+- **LocalStorage** — Settings + cache persistence
 
 ### Code Quality
 - **TypeScript strict mode** — 100% type coverage
@@ -370,9 +341,8 @@ export class RequestCache {
 
 ### Prerequisites
 - Node.js 18+
-- Supabase account (free tier available)
 - Make.com webhooks for news scraping
-- Optional: Google Gemini API key for enhanced features
+- Optional: AI provider API keys (Gemini, Groq, or OpenAI)
 
 ### Installation
 
@@ -386,7 +356,7 @@ npm install
 
 # Configure environment variables
 cp .env.example .env
-# Edit .env with your Supabase credentials and webhook URLs
+# Edit .env with your webhook URLs and optional AI keys
 
 # Start development server
 npm run dev
@@ -399,50 +369,35 @@ Open [http://localhost:5173](http://localhost:5173)
 Create a `.env` file with the following variables:
 
 ```env
-# Supabase Configuration (Required)
-VITE_SUPABASE_URL=your_supabase_project_url
-VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
-
 # Make.com Webhooks (Required)
 VITE_WEBHOOK_NEWS_SCRAPE=your_news_scrape_webhook_url
 VITE_WEBHOOK_SCRAPE_TO_ARTICLE=your_article_generation_webhook_url
 
-# AI Providers (Optional)
+# AI Providers (Optional - for enhanced features)
 VITE_GEMINI_API_KEY=your_gemini_api_key_here
 VITE_GROQ_API_KEY=your_groq_api_key_here
 VITE_OPENAI_API_KEY=your_openai_api_key_here
 ```
 
-### Database Setup
-
-The application uses Supabase for secure data storage. The database schema includes:
-
-1. **User Profiles** - Linked to authentication
-2. **Generated Articles** - Stores all user-created content
-3. **Search History** - Tracks user searches
-
-All tables have Row Level Security (RLS) enabled, ensuring users can only access their own data.
-
 ### First-Time Setup
 
-1. **Create a Supabase account**
-   - Sign up at https://supabase.com
-   - Create a new project
-   - Copy your project URL and anon key to `.env`
-
-2. **Set up Make.com webhooks**
+1. **Set up Make.com webhooks** (Required)
    - Create webhooks for news scraping and article generation
    - Add webhook URLs to `.env`
+   - These URLs should be kept private
 
-3. **Sign up in the app**
-   - Start the dev server
-   - Create an account with email/password
-   - Start generating articles!
+2. **(Optional) Add AI provider keys** for enhanced features
+   - Gemini: https://makersuite.google.com/app/apikey (FREE)
+   - Groq: https://console.groq.com/keys (FREE)
+   - OpenAI: https://platform.openai.com/api-keys (Paid)
 
-4. **(Optional) Add AI provider keys** for enhanced features
-   - Gemini: https://makersuite.google.com/app/apikey
-   - Groq: https://console.groq.com/keys
-   - OpenAI: https://platform.openai.com/api-keys
+3. **Start using the app**
+   - Run `npm run dev`
+   - Search for news headlines
+   - Generate articles with one click
+   - Articles are saved in your browser's LocalStorage
+
+**Important:** Keep your `.env` file secure and never commit it to version control. All sensitive configuration (webhook URLs and API keys) should remain private.
 
 **[Try Live Demo →](https://newsgenai.bolt.host)**
 
