@@ -6,6 +6,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-100%25-blue)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-18-blue)](https://reactjs.org/)
 
+![NewsGen AI Screenshot](./assets/screenshot.png)
+
 **[🚀 Try Live Demo](https://newsgenai.bolt.host)** | **[Tech Stack](#tech-stack)** | **[Quick Start](#quick-start)**
 
 **A [FutureCrafters](https://www.futurecrafters.ai) Project** • Built by [Irvin Cruz](https://irvincruz.com)
