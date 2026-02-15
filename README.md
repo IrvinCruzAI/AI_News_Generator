@@ -8,7 +8,7 @@
 
 **[🚀 Try Live Demo](https://newsgenai.bolt.host)** | **[Tech Stack](#tech-stack)** | **[Quick Start](#quick-start)**
 
-![NewsGen AI Screenshot](./assets/screenshot.png)
+![Screenshot](assets/screenshot.png)
 
 **A [FutureCrafters](https://www.futurecrafters.ai) Project** • Built by [Irvin Cruz](https://irvincruz.com)
 
